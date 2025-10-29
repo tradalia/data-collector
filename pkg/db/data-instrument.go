@@ -126,6 +126,11 @@ func GetRollingDataInstrumentsByProductIdFast(tx *gorm.DB, pId uint, months stri
 //=============================================================================
 
 func GetDataInstrumentsFull(tx *gorm.DB, filter map[string]any) (*[]DataInstrumentFull, error) {
+	if user,ok := filter["username"]; ok {
+		delete(filter, "username")
+		filter["dp.username"] = user
+	}
+
 	var list []DataInstrumentFull
 
 	res := tx.
